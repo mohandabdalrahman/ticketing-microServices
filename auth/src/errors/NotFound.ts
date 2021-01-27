@@ -3,7 +3,7 @@ import CustomError from './CustomError';
 class NotFound extends CustomError {
   statusCode = 404;
   constructor() {
-    super();
+    super('Route not found');
     Object.setPrototypeOf(this, NotFound.prototype);
   }
   serializeErrors() {

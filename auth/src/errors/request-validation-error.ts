@@ -2,7 +2,7 @@ import { ValidationError } from 'express-validator';
 import CustomError from './CustomError';
 export class RequestValidationError extends CustomError {
   constructor(public errors: ValidationError[], public statusCode: number) {
-    super();
+    super('Request fail');
     // when extend build in class for your class work fine
     Object.setPrototypeOf(this, RequestValidationError.prototype);
   }
