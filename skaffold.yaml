@@ -15,7 +15,16 @@ build:
      sync:
        manual:
         - src: 'src/**/*.ts'
-          dest: .     
+          dest: .   
+
+   - image: docker.io/mohandabdalrahman/client
+     context: client
+     docker:
+       dockerfile: Dockerfile
+     sync:
+       manual:
+        - src: '**/*.js'
+          dest: .       
   #  - image: mohandabdalrahman/comments
   #    context: comments
   #    docker:

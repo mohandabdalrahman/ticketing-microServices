@@ -14,10 +14,10 @@ spec:
          backend: 
            serviceName: auth-srv
            servicePort: 4000
-      #  - path: /posts 
-      #    backend:
-      #      serviceName: query-srv
-      #      servicePort: 4002 
+       - path: /?(.*)
+         backend:
+           serviceName: client-srv
+           servicePort: 3000 
       #  - path: /posts/?(.*)/comments
       #    backend:
       #      serviceName: comments-srv
