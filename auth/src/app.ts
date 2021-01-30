@@ -3,8 +3,7 @@ import { currentUserRouter } from './routes/current-user';
 import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
 import { signUpRouter } from './routes/signup';
-import { errorHandler } from './middleWares/error-handler';
-import NotFoundError from './errors/NotFound';
+import { NotFound, errorHandler } from '@motickets/common';
 import connectDatabase from './database/db';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
@@ -29,7 +28,7 @@ app.use(signOutRouter);
 app.use(signUpRouter);
 // Handle not found route
 app.all('*', () => {
-  throw new NotFoundError();
+  throw new NotFound();
 });
 
 app.use(errorHandler);

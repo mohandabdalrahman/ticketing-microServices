@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { User } from '../database/models/user';
 import jwt from 'jsonwebtoken';
-import validateRequest from '../middleWares/validate-request';
+import { validateRequest } from '@motickets/common';
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.post(
       .withMessage('Password must be between 4 and 20 characters'),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: any, res: Response) => {
     const { email, password } = req.body;
     // check user exist
     const existingUser = await User.findOne({ email });
