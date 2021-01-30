@@ -25,14 +25,14 @@ build:
        manual:
         - src: '**/*.js'
           dest: .       
-  #  - image: mohandabdalrahman/comments
-  #    context: comments
-  #    docker:
-  #      dockerfile: Dockerfile
-  #    sync:
-  #      manual:
-  #       - src: '*.js'
-  #         dest: .  
+   - image: docker.io/mohandabdalrahman/tickets
+     context: tickets
+     docker:
+       dockerfile: Dockerfile
+     sync:
+       manual:
+        - src: 'src/**/*.ts' 
+          dest: .  
   #  - image: mohandabdalrahman/event-bus
   #    context: event-bus
   #    docker:

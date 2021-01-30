@@ -14,14 +14,14 @@ spec:
          backend: 
            serviceName: auth-srv
            servicePort: 4000
+       - path: /api/tickets/?(.*)
+         backend:
+           serviceName: tickets-srv
+           servicePort: 5000
        - path: /?(.*)
          backend:
            serviceName: client-srv
            servicePort: 3000 
-      #  - path: /posts/?(.*)/comments
-      #    backend:
-      #      serviceName: comments-srv
-      #      servicePort: 4001
       #  - path: /?(.*)
       #    backend:
       #      serviceName: client-srv
