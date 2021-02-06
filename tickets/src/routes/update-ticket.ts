@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validateRequest, NotFound } from '@motickets/common';
 import { Ticket } from '../database/models/ticket';
+import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
 const router = express.Router();
 
 router.put(
@@ -30,6 +32,12 @@ router.put(
     // update ticket
     ticket.set({ title, price });
     await ticket.save();
+    await new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      price: ticket.price,
+      title: ticket.title,
+      userId: ticket.userId,
+    });
     return res.status(200).send(ticket);
   }
 );

@@ -6,6 +6,7 @@
     "currentuser",
     "depl",
     "motickets",
+    "nats",
     "signin",
     "signout"
   ]

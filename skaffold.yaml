@@ -33,14 +33,14 @@ build:
        manual:
         - src: 'src/**/*.ts' 
           dest: .  
-  #  - image: mohandabdalrahman/event-bus
-  #    context: event-bus
-  #    docker:
-  #      dockerfile: Dockerfile
-  #    sync:
-  #      manual:
-  #       - src: '*.js'
-  #         dest: .    
+   - image: docker.io/mohandabdalrahman/orders
+     context: orders
+     docker:
+       dockerfile: Dockerfile
+     sync:
+       manual:
+        - src: 'src/**/*.ts'
+          dest: .    
   #  - image: mohandabdalrahman/moderation
   #    context: moderation
   #    docker:
