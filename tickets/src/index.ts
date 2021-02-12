@@ -1,5 +1,7 @@
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
 const connectNatsServer = async () => {
   try {
     await natsWrapper.connect(
@@ -11,6 +13,10 @@ const connectNatsServer = async () => {
       console.log('nats connection closed');
       process.exit();
     });
+    // start listeners
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen()
+
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
   } catch (error) {

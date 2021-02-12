@@ -1,6 +1,11 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { requireAuth, validateRequest, NotFound } from '@motickets/common';
+import {
+  requireAuth,
+  validateRequest,
+  NotFound,
+  BadRequestError,
+} from '@motickets/common';
 import { Ticket } from '../database/models/ticket';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
 import { natsWrapper } from '../nats-wrapper';
@@ -23,6 +28,9 @@ router.put(
     if (!ticket) {
       throw new NotFound();
     }
+    if (ticket.orderId) {
+      throw new BadRequestError('can not edit reserved Ticket');
+    }
     if (ticket.userId !== req.currentUser.id) {
       return res
         .status(401)
@@ -37,6 +45,7 @@ router.put(
       price: ticket.price,
       title: ticket.title,
       userId: ticket.userId,
+      version: ticket.version,
     });
     return res.status(200).send(ticket);
   }

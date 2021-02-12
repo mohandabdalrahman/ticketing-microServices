@@ -56,6 +56,7 @@ router.post(
       userId: order.userId,
       id: order.id,
       status: order.status,
+      version: order.version,
       ticket: {
         id: ticket.id,
         price: ticket.price,

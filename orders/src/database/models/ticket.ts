@@ -1,11 +1,14 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@motickets/common';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+
 import { Order } from './order';
 const { Schema, model } = mongoose;
 
 interface TicketAttrs {
   title: string;
   price: number;
+  id: string;
   version: number;
 }
 
@@ -29,10 +32,7 @@ const ticketSchema = new Schema(
     price: {
       type: Number,
       required: true,
-    },
-    userId: {
-      type: String,
-      required: true,
+      min: 0,
     },
   },
   {
@@ -46,8 +46,17 @@ const ticketSchema = new Schema(
   }
 );
 
+
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
+
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
-  return new Ticket(attrs);
+  return new Ticket({
+    _id: attrs.id,
+    title: attrs.title,
+    price: attrs.price,
+    version: attrs.version
+  });
 };
 
 // methods

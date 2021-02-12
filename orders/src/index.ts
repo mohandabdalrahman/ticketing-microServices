@@ -1,5 +1,8 @@
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
+import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
+import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener'
+
 const connectNatsServer = async () => {
   try {
     await natsWrapper.connect(
@@ -13,6 +16,8 @@ const connectNatsServer = async () => {
     });
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+    new TicketCreatedListener(natsWrapper.client).listen();
+    new TicketUpdatedListener(natsWrapper.client).listen();
   } catch (error) {
     console.log(
       '🚀 ~ file: index.ts ~ line 8 ~ connectNatsServer ~ error',
