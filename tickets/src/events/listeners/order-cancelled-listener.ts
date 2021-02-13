@@ -4,7 +4,7 @@ import { queueGroupName } from './queue-group-name';
 import { Ticket } from '../../database/models/ticket';
 import { TicketUpdatedPublisher } from '../publishers/ticket-updated-publisher';
 export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
-  subject: Subjects.OrderCancelled;
+  subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
   queueGroupName: string = queueGroupName;
 
   async onMessage(data: OrderCancelledEvent['data'], msg: Message) {

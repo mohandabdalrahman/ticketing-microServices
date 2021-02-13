@@ -41,6 +41,14 @@ build:
        manual:
         - src: 'src/**/*.ts'
           dest: .    
+   - image: docker.io/mohandabdalrahman/expiration
+     context: expiration
+     docker:
+       dockerfile: Dockerfile
+     sync:
+       manual:
+        - src: 'src/**/*.ts'
+          dest: .    
   #  - image: mohandabdalrahman/moderation
   #    context: moderation
   #    docker:

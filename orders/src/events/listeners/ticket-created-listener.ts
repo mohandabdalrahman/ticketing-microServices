@@ -7,8 +7,8 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   subject: Subjects.TicketCreated = Subjects.TicketCreated;
   queueGroupName = queueGroupName;
   async onMessage(data: TicketCreatedEvent['data'], msg: Message) {
-    const { id, title, price } = data;
-    const ticket = Ticket.build({ title, price,id });
+    const { id, title, price, version } = data;
+    const ticket = Ticket.build({ title, price, id, version });
     await ticket.save();
     // * success process event
     msg.ack();
