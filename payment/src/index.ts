@@ -1,9 +1,7 @@
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
-import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
-import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener';
-import { ExpirationCompleteListener } from './events/listeners/expiration-complete-listener';
-import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
+import { OrderCreatedListener } from './events/listener/order-created-listener';
+import { OrderCancelledListener } from './events/listener/order-cancelled-listener';
 const connectNatsServer = async () => {
   try {
     await natsWrapper.connect(
@@ -15,12 +13,12 @@ const connectNatsServer = async () => {
       console.log('nats connection closed');
       process.exit();
     });
+    // start listeners
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen();
+
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
-    new TicketCreatedListener(natsWrapper.client).listen();
-    new TicketUpdatedListener(natsWrapper.client).listen();
-    new ExpirationCompleteListener(natsWrapper.client).listen();
-    new PaymentCreatedListener(natsWrapper.client).listen();
   } catch (error) {
     console.log(
       '🚀 ~ file: index.ts ~ line 8 ~ connectNatsServer ~ error',

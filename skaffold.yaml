@@ -49,6 +49,14 @@ build:
        manual:
         - src: 'src/**/*.ts'
           dest: .    
+   - image: docker.io/mohandabdalrahman/payments
+     context: payment
+     docker:
+       dockerfile: Dockerfile
+     sync:
+       manual:
+        - src: 'src/**/*.ts'
+          dest: .    
   #  - image: mohandabdalrahman/moderation
   #    context: moderation
   #    docker:
