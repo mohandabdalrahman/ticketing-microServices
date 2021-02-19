@@ -4,6 +4,8 @@ const Header = ({ currentUser }) => {
     !currentUser && { label: 'Sign Up', href: '/auth/signup' },
     !currentUser && { label: 'Sign In', href: '/auth/signin' },
     currentUser && { label: 'Sign Out', href: '/auth/signout' },
+    currentUser && { label: 'My Orders', href: '/orders' },
+    currentUser && { label: 'Sell Tickets', href: '/tickets/new' },
   ].filter(linkConfig => linkConfig)
     .map(({ label, href }) => (
       <li key={href} className="nav-item">
