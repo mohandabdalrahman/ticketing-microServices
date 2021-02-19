@@ -1,6 +1,7 @@
 import { app } from './app';
 
 app.listen(4000, () => {
+  console.log('Starting Up ...');
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must defined');
   }
